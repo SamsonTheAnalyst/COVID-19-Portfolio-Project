@@ -1,0 +1,9 @@
+-- COVID-19 საქართველოს მონაცემები პირველი შემთხვევის დაფიქსირებიდან 20 ნოემბრამდე
+
+SELECT * FROM portfolio.covid_data;
+
+-- შემთხვევების რაოდენობა vs სიკვდილიანობის მაჩვენებელი
+-- ასახავს თარიღის მიხედვით სიკვდილიანობის ალბათობას დაინფიცირების შემთხვევაში
+
+SELECT date, total_cases, total_deaths, (total_deaths / total_cases) * 100 AS DeathPercentage
+FROM portfolio.covid_data
