@@ -49,7 +49,7 @@ id,name,created_at,launched_at,deadline,backers_count,currency,pledged, goal_USD
 375484295,Way of the samurai,2/19/2019,3/12/2019,4/11/2019,479,gbp,16854," $8,500.00 ",   United Kingdom,https://www.kickstarter.com/discover/categories/games/playing%20cards,,,
 1851778839,BULLSHIP! - Never Trust A Pirate!,9/10/2019,11/7/2019,12/12/2019,213,eur,4643," $8,400.00 ",   France,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 1292186083,Iwari,6/22/2019,7/9/2019,8/8/2019,252,usd,13564.5," $8,000.00 ",   Ukraine,https://www.kickstarter.com/discover/categories/games/playing%20cards,,,
-1926175052,Troll's Teeth: A Tabletop RPG Game of Chance�Ѣ,9/15/2019,11/13/2019,12/11/2019,33,aud,1592.32," $8,000.00 ",   Australia,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
+1926175052,Troll's Teeth: A Tabletop RPG Game of ChanceÑ¢,9/15/2019,11/13/2019,12/11/2019,33,aud,1592.32," $8,000.00 ",   Australia,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 693521123,Aeon's End: The New Age,4/9/2019,4/23/2019,5/23/2019,71,usd,1633," $7,500.00 ",   United States,https://www.kickstarter.com/discover/categories/games/playing%20cards,,,
 1361589531,Space Raiders - The Space Goblins!,7/4/2019,10/18/2019,11/17/2019,15,usd,915," $7,500.00 ",   United States,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 2063533927,Highlords Firstborn Playing Cards - Volume 1 Fantasy Series,10/22/2019,11/13/2019,12/16/2019,2,usd,155," $7,200.00 ",   Czech Republic,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
@@ -97,7 +97,7 @@ id,name,created_at,launched_at,deadline,backers_count,currency,pledged, goal_USD
 20761861,Our House: The Lore Driven Card Game,2/8/2019,2/8/2019,3/10/2019,170,gbp,6324," $2,000.00 ",   United Kingdom,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 887539225,Equality // Integrity \\\\ Justice Playing Cards,4/21/2019,5/1/2019,5/31/2019,36,usd,3511," $2,000.00 ",   United States,https://www.kickstarter.com/discover/categories/games/puzzles,,,
 1204514267,Attribute Dice,6/5/2019,6/10/2019,6/24/2019,144,eur,6087," $2,000.00 ",   Spain,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
-1471383303,Heritage Luxury playing cards ��� printed by Cartamundi,7/17/2019,8/6/2019,8/27/2019,482,gbp,11063," $2,000.00 ",   Poland,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
+1471383303,Heritage Luxury playing cards îÇ printed by Cartamundi,7/17/2019,8/6/2019,8/27/2019,482,gbp,11063," $2,000.00 ",   Poland,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 1884324378,Handsome - An elegant wordgame by TC Petty III,9/12/2019,10/5/2019,11/4/2019,125,gbp,3886," $2,000.00 ",   United Kingdom,https://www.kickstarter.com/discover/categories/games/playing%20cards,,,
 63381877,Dwarf board game,1/4/2019,2/1/2019,3/1/2019,144,usd,1816," $1,800.00 ",   United States,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 1951658552,Twist Gaming - Year 4,9/24/2019,9/27/2019,10/27/2019,14,usd,479," $1,600.00 ",   United States,https://www.kickstarter.com/discover/categories/games/playing%20cards,,,
@@ -151,3 +151,45 @@ id,name,created_at,launched_at,deadline,backers_count,currency,pledged, goal_USD
 999093282,The 72 Angels Talisman Coins & Spiritual Cards,4/29/2019,8/12/2019,9/11/2019,11,gbp,81, $20.00 ,   United Kingdom,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 1494377696,TaleSpire,7/26/2019,8/5/2019,8/13/2019,17,gbp,367, $20.00 ,   United Kingdom,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
 1561309532,Raccoon Tycoon: The Fat Cat Expansion,8/4/2019,8/8/2019,8/27/2019,39,eur,1416, $1.00 ,   Italy,https://www.kickstarter.com/discover/categories/games/tabletop%20games,,,
+
+-- Kickstarter-ზე არსებული თამაშების პროექტების, მხარდამჭერების რაოდენობა, ჯამური სამიზნე 
+--და ჯამურად შეგროვებული თანხები
+
+SELECT COUNT(*) AS Projects, SUM(backers_count) AS Backers,
+SUM(goal_USD) AS Goal,SUM(pledged) AS Pledged
+FROM kickstarter_games;
+
+--TOP 10 პროექტი შეგროვებული თანხით
+
+SELECT name, pledged, backers_count, goal_USD
+FROM kickstarter_games
+ORDER BY pledged DESC
+LIMIT 10;
+
+-- პროექტების მიზნების შესრულება პროცენტებში
+
+SELECT name,pledged,goal_usd,(pledged/goal_USD)*100 AS GoalPerformance
+FROM kickstarter_games
+ORDER BY goal_usd DESC;
+
+-- შეგროვებული თანხის საშუალო რაოდენობა თითო მხარდამჭერზე
+
+SELECT name, pledged, backers_count, (pledged/backers_count) AS pledgedperbacker
+FROM kickstarter_games
+ORDER BY backers_count DESC;
+
+-- პროექტები დაჯგუფებული ქვეყნების მიხედვით
+
+SELECT country, COUNT(country) AS Projects
+FROM kickstarter_games
+GROUP BY country
+ORDER BY COUNT(*) DESC;
+
+-- წარმატებული და წარუმატებელი პროექტები
+
+SELECT name, backers_count, pledged, goal_USD,
+  CASE
+    WHEN pledged < goal_USD THEN 'Failed'
+    WHEN pledged >= goal_USD THEN 'Successful'
+  END AS 'Status'
+FROM kickstarter_games;
